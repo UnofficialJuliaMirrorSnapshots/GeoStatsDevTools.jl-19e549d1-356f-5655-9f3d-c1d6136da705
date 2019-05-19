@@ -43,15 +43,17 @@ function StructuredGridData(data::Dict{Symbol,<:AbstractArray},
   sizes = [size(array) for array in coordarrays]
   @assert length(unique(sizes)) == 1 "coordinates arrays must have the same dimensions"
 
-  coords = Matrix{T}(N, prod(sizes[1]))
+  coords = Matrix{T}(undef, N, prod(sizes[1]))
   for (i, array) in enumerate(coordarrays)
-    coords[i,:] .= array[:]
+    coords[i,:] = array
   end
 
   StructuredGridData{T,N}(data, coords)
 end
 
 variables(geodata::StructuredGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
+
+Base.size(geodata::StructuredGridData) = geodata.dims
 
 npoints(geodata::StructuredGridData) = size(geodata.coords, 2)
 

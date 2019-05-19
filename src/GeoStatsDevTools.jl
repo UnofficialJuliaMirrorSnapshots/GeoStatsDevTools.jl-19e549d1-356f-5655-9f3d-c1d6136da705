@@ -39,6 +39,7 @@ include("spatialdata/structured_grid_data.jl")
 # spatial domain
 include("domains/point_set.jl")
 include("domains/regular_grid.jl")
+include("domains/structured_grid.jl")
 
 # data partitions
 include("partitions.jl")
@@ -68,6 +69,7 @@ include("statistics.jl")
 include("plotrecipes/spatialdata.jl")
 include("plotrecipes/domains/point_set.jl")
 include("plotrecipes/domains/regular_grid.jl")
+include("plotrecipes/domains/structured_grid.jl")
 include("plotrecipes/domains/abstract_domain.jl")
 include("plotrecipes/partitions.jl")
 include("plotrecipes/solutions/estimation.jl")
@@ -84,6 +86,7 @@ export
   # domains
   PointSet,
   RegularGrid,
+  StructuredGrid,
   origin,
   spacing,
 
