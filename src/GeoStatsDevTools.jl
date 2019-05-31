@@ -6,6 +6,7 @@ module GeoStatsDevTools
 
 using Reexport
 using Random
+using StatsBase
 using Distances
 using LinearAlgebra
 using DataFrames
@@ -18,11 +19,11 @@ using CSV
 
 using GeoStatsBase
 
-# implement methods for spatial data
-import GeoStatsBase: domain, coordnames, coordinates!, variables, npoints, value
-
-# implement methods for spatial domain
-import GeoStatsBase: coordinates!, npoints, nearestlocation
+# implement methods for spatial objects
+import GeoStatsBase: domain, npoints,
+                     coordnames, coordinates!,
+                     coordextrema, nearestlocation,
+                     variables, value
 
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
@@ -40,6 +41,9 @@ include("spatialdata/structured_grid_data.jl")
 
 # spatial partitions
 include("partitions.jl")
+
+# spatial weighting
+include("weighting.jl")
 
 # domain navigation
 include("paths.jl")
@@ -73,12 +77,6 @@ include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
 
 export
-  # spatial data
-  GeoDataFrame,
-  PointSetData,
-  RegularGridData,
-  StructuredGridData,
-
   # domains
   PointSet,
   RegularGrid,
@@ -86,10 +84,17 @@ export
   origin,
   spacing,
 
+  # spatial data
+  GeoDataFrame,
+  PointSetData,
+  RegularGridData,
+  StructuredGridData,
+
   # partitions
   SpatialPartition,
   UniformPartitioner,
   FractionPartitioner,
+  BlockPartitioner,
   BallPartitioner,
   PlanePartitioner,
   DirectionPartitioner,
@@ -99,6 +104,11 @@ export
   partition,
   subsets,
   →,
+
+  # weighting
+  WeightedSpatialData,
+  BlockWeighter,
+  weight,
 
   # paths
   SimplePath,
