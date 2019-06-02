@@ -55,8 +55,11 @@ end
 RegularGrid(dims::Dims{N}, origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real} =
   RegularGrid{T,N}(dims, origin, spacing)
 
-RegularGrid(start::NTuple{N,T}, finish::NTuple{N,T}; dims::Dims{N}=ntuple(i -> 100, N)) where {N,T<:Real} =
+RegularGrid(start::NTuple{N,T}, finish::NTuple{N,T}; dims::Dims{N}=ntuple(i->100, N)) where {N,T<:Real} =
   RegularGrid{T,N}(dims, start, ntuple(i->(finish[i]-start[i])/(dims[i]-1), N))
+
+RegularGrid(extent::NTuple{N,A}; dims::Dims{N}=ntuple(i->100, N)) where {N,T<:Real,A<:Tuple{T,T}} =
+  RegularGrid(first.(extent), last.(extent), dims=dims)
 
 RegularGrid{T}(dims::Dims{N}) where {N,T<:Real} =
   RegularGrid{T,N}(dims, ntuple(i->zero(T), N), ntuple(i->one(T), N))
@@ -77,10 +80,10 @@ function coordinates!(buff::AbstractVector{T}, grid::RegularGrid{T,N},
   end
 end
 
-function coordextrema(grid::RegularGrid)
-  lowerleft  = SVector(grid.origin)
-  upperright = SVector(@. grid.origin + (grid.dims - 1)*grid.spacing)
-  lowerleft, upperright
+function extent(grid::RegularGrid{T,N}) where {N,T<:Real}
+  lowerleft  = grid.origin
+  upperright = @. grid.origin + (grid.dims - 1)*grid.spacing
+  ntuple(i->(lowerleft[i],upperright[i]), N)
 end
 
 function nearestlocation(grid::RegularGrid{T,N}, coords::AbstractVector{T}) where {N,T<:Real}

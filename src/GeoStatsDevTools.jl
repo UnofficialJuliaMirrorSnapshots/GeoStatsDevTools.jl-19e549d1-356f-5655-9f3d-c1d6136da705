@@ -22,7 +22,7 @@ using GeoStatsBase
 # implement methods for spatial objects
 import GeoStatsBase: domain, npoints,
                      coordnames, coordinates!,
-                     coordextrema, nearestlocation,
+                     extent, nearestlocation,
                      variables, value
 
 # implement methods for spatial statistics
@@ -138,11 +138,9 @@ export
 
   # utilities
   readgeotable,
-  boundgrid,
 
   # statistics
-  mean,
-  var,
+  mean, var,
   quantile
 
 end
