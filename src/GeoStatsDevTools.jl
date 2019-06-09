@@ -22,7 +22,7 @@ using GeoStatsBase
 # implement methods for spatial objects
 import GeoStatsBase: domain, npoints,
                      coordnames, coordinates!,
-                     extent, nearestlocation,
+                     bounds, nearestlocation,
                      variables, value
 
 # implement methods for spatial statistics
@@ -73,6 +73,7 @@ include("plotrecipes/domains/structured_grid.jl")
 include("plotrecipes/domains/abstract_domain.jl")
 include("plotrecipes/spatialdata.jl")
 include("plotrecipes/partitions.jl")
+include("plotrecipes/weighting.jl")
 include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
 
